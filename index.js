@@ -25,14 +25,6 @@ mutate("todo/delete", (term, { todoId }, state) => {
   return { todoId };
 });
 
-mutate("area/delete", (term, { areaId }, state) => {
-  delete state.areas[areaId];
-  state.todos = Object.entries(state.todos)
-    .filter(([, { area }]) => area === areaId)
-    .reduce((res, [todoId, todo]) => ({ ...res, [todoId]: todo }), {});
-  return { areaId };
-});
-
 mutate("todo/new", (term, { area, text, id }, state) => {
   const todo = state.todos.find(({ id: todoId }) => id === todoId);
   state.todos.push((todo && { ...todo, area, text }) || { id, text, area });
