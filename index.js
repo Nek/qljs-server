@@ -5,8 +5,8 @@ const state = {
   initialized: false,
   todos: [],
   areas: [
-    { title: "Work", id: 0 },
-    { title: "Life", id: 1 }
+    { title: "Work", id: "0" },
+    { title: "Life", id: "1" }
   ]
 };
 
@@ -34,7 +34,8 @@ mutate("area/delete", (term, { areaId }, state) => {
 });
 
 mutate("todo/new", (term, { area, text, id }, state) => {
-  state.todos = { ...state.todos, [id]: { text, area } };
+  const todo = state.todos.find(({ id: todoId }) => id === todoId);
+  state.todos.push((todo && { ...todo, area, text }) || { id, text, area });
   return { id };
 });
 
